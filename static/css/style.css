@@ -1,0 +1,560 @@
+/* ==========================================================================
+   Heart Disease Detection System
+   Modern Medical Theme — works with Bootstrap 5
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Color palette & design tokens
+   Medical blues/teals with clean white cards
+   -------------------------------------------------------------------------- */
+:root {
+    --medical-primary: #006d77;
+    --medical-primary-dark: #004e56;
+    --medical-secondary: #028090;
+    --medical-accent: #00b4d8;
+    --medical-light: #e0f7fa;
+    --medical-surface: #ffffff;
+    --medical-text: #0d2c36;
+    --medical-text-muted: #5a7a85;
+    --medical-danger: #c1121f;
+    --medical-danger-hover: #9b0e18;
+    --medical-success: #2a9d8f;
+    --medical-warning-bg: #fff8e6;
+    --medical-border: rgba(0, 109, 119, 0.12);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-pill: 50px;
+    --shadow-sm: 0 4px 14px rgba(0, 77, 86, 0.08);
+    --shadow-md: 0 10px 30px rgba(0, 77, 86, 0.12);
+    --shadow-lg: 0 18px 50px rgba(0, 50, 60, 0.15);
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Page background — gradient medical theme
+   -------------------------------------------------------------------------- */
+body {
+    font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--medical-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+
+    /* Soft multi-layer gradient (professional healthcare look) */
+    background:
+        radial-gradient(ellipse at 10% 0%, rgba(0, 180, 216, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 100%, rgba(0, 109, 119, 0.12) 0%, transparent 50%),
+        linear-gradient(180deg, #e8f6f8 0%, #f4fafb 40%, #eef5f7 100%);
+    background-attachment: fixed;
+}
+
+main {
+    flex: 1;
+}
+
+/* --------------------------------------------------------------------------
+   3. Navbar
+   -------------------------------------------------------------------------- */
+.healthcare-nav {
+    background: linear-gradient(
+        135deg,
+        var(--medical-primary-dark) 0%,
+        var(--medical-primary) 45%,
+        var(--medical-secondary) 100%
+    );
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+    transition: opacity var(--transition-fast);
+}
+
+.navbar-brand:hover {
+    opacity: 0.9;
+}
+
+.nav-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    font-size: 1.15rem;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Legacy navbar on result page — match medical theme */
+.navbar.bg-danger {
+    background: linear-gradient(
+        135deg,
+        var(--medical-primary-dark) 0%,
+        var(--medical-primary) 100%
+    ) !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. Hero section
+   -------------------------------------------------------------------------- */
+.hero-section {
+    background: linear-gradient(
+        165deg,
+        rgba(255, 255, 255, 0.85) 0%,
+        rgba(224, 247, 250, 0.6) 50%,
+        transparent 100%
+    );
+    border-bottom: 1px solid var(--medical-border);
+}
+
+.hero-badge {
+    background: linear-gradient(135deg, rgba(0, 109, 119, 0.1), rgba(0, 180, 216, 0.15));
+    color: var(--medical-primary);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.45rem 1rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--medical-border);
+}
+
+.hero-title {
+    font-weight: 800;
+    color: var(--medical-primary-dark);
+    font-size: clamp(1.65rem, 4.5vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.hero-text {
+    color: var(--medical-text-muted);
+    max-width: 38rem;
+}
+
+/* --------------------------------------------------------------------------
+   5. Modern cards
+   -------------------------------------------------------------------------- */
+.info-mini-card,
+.feature-card,
+.hero-card,
+.form-card {
+    background: var(--medical-surface);
+    border: 1px solid var(--medical-border);
+    transition:
+        transform var(--transition-smooth),
+        box-shadow var(--transition-smooth),
+        border-color var(--transition-fast);
+}
+
+.info-mini-card {
+    border-radius: var(--radius-md);
+    padding: 1.1rem;
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+}
+
+.info-mini-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(0, 180, 216, 0.25);
+}
+
+.info-icon {
+    font-size: 1.6rem;
+    color: var(--medical-secondary);
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+/* Main patient form card */
+.form-card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: none;
+}
+
+.form-card:hover {
+    box-shadow: 0 22px 55px rgba(0, 50, 60, 0.18);
+}
+
+.form-card-header {
+    background: linear-gradient(
+        120deg,
+        var(--medical-primary-dark) 0%,
+        var(--medical-primary) 40%,
+        var(--medical-accent) 100%
+    );
+    color: #fff;
+    border: none;
+    padding: 1.5rem 1.75rem;
+}
+
+.header-icon {
+    width: 3.1rem;
+    height: 3.1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.55rem;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+/* Section cards inside the form */
+.section-card {
+    background: linear-gradient(145deg, #f8fcfd 0%, var(--medical-light) 100%);
+    border: 1px solid var(--medical-border);
+    border-radius: var(--radius-md);
+    padding: 1.35rem 1.5rem;
+    height: 100%;
+    box-shadow: var(--shadow-sm);
+}
+
+.section-card:hover {
+    border-color: rgba(0, 180, 216, 0.3);
+    box-shadow: var(--shadow-md);
+}
+
+.section-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--medical-primary);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 2px solid rgba(0, 109, 119, 0.12);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Feature highlight cards */
+.feature-card {
+    border-radius: var(--radius-md) !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg) !important;
+    border-color: rgba(0, 180, 216, 0.35) !important;
+}
+
+.feature-icon {
+    font-size: 2.1rem;
+    color: var(--medical-secondary) !important;
+}
+
+/* Result page cards */
+.hero-card {
+    border: none !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-lg) !important;
+    background: var(--medical-surface);
+    backdrop-filter: blur(4px);
+}
+
+.hero-card:hover {
+    box-shadow: 0 20px 48px rgba(0, 50, 60, 0.16) !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. Form styling
+   -------------------------------------------------------------------------- */
+.form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--medical-text);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.01em;
+}
+
+.form-control,
+.form-select {
+    border: 1.5px solid #c8dce3;
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.85rem;
+    font-size: 0.95rem;
+    background-color: #fff;
+    color: var(--medical-text);
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.form-control-lg,
+.form-select-lg {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+}
+
+.form-control:hover,
+.form-select:hover {
+    border-color: var(--medical-accent);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--medical-secondary);
+    box-shadow: 0 0 0 0.25rem rgba(0, 180, 216, 0.2);
+    background-color: #fff;
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: #9eb5bf;
+    font-size: 0.9rem;
+}
+
+.form-text {
+    color: var(--medical-text-muted);
+    font-size: 0.78rem;
+    margin-top: 0.35rem;
+}
+
+/* Invalid state (browser validation) */
+.form-control:invalid:not(:placeholder-shown),
+.form-select:invalid {
+    border-color: #e07a7a;
+}
+
+/* --------------------------------------------------------------------------
+   7. Buttons & hover effects
+   -------------------------------------------------------------------------- */
+.btn-predict {
+    background: linear-gradient(135deg, var(--medical-danger) 0%, #e63946 100%);
+    border: none;
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    border-radius: var(--radius-pill);
+    padding: 0.85rem 2.5rem;
+    box-shadow: 0 6px 20px rgba(193, 18, 31, 0.3);
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-smooth),
+        background var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-predict::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.15) 100%);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.btn-predict:hover {
+    background: linear-gradient(135deg, var(--medical-danger-hover) 0%, var(--medical-danger) 100%);
+    color: #fff !important;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(193, 18, 31, 0.4);
+}
+
+.btn-predict:hover::after {
+    opacity: 1;
+}
+
+.btn-predict:active {
+    transform: translateY(-1px) scale(0.99);
+    box-shadow: 0 4px 12px rgba(193, 18, 31, 0.35);
+}
+
+/* Secondary / outline buttons (result page) */
+.btn-outline-danger {
+    color: var(--medical-danger);
+    border: 2px solid var(--medical-danger);
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    padding: 0.55rem 1.5rem;
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.btn-outline-danger:hover {
+    background: var(--medical-danger);
+    color: #fff;
+    border-color: var(--medical-danger);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(193, 18, 31, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   8. Alerts & tables (result page)
+   -------------------------------------------------------------------------- */
+.alert {
+    border-radius: var(--radius-md);
+    border: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.alert-warning {
+    background: var(--medical-warning-bg);
+    color: #7a5c00;
+    border-left: 4px solid #f4a261;
+}
+
+.alert-danger {
+    border-left: 4px solid var(--medical-danger);
+}
+
+.table {
+    --bs-table-striped-bg: rgba(0, 109, 119, 0.04);
+}
+
+.table thead th {
+    background: linear-gradient(135deg, var(--medical-primary) 0%, var(--medical-secondary) 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: none;
+    padding: 0.85rem 1rem;
+}
+
+.table tbody td {
+    padding: 0.7rem 1rem;
+    vertical-align: middle;
+    color: var(--medical-text);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: rgba(224, 247, 250, 0.5);
+}
+
+/* Result icons */
+.result-icon {
+    font-size: 4.5rem;
+    line-height: 1;
+}
+
+.result-icon .text-success {
+    color: var(--medical-success) !important;
+}
+
+.result-icon .text-danger {
+    color: var(--medical-danger) !important;
+}
+
+.display-6 {
+    font-size: clamp(1.35rem, 3.5vw, 2rem);
+    letter-spacing: -0.01em;
+}
+
+/* --------------------------------------------------------------------------
+   9. Footer
+   -------------------------------------------------------------------------- */
+.site-footer,
+footer.text-center {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid var(--medical-border);
+    color: var(--medical-text-muted);
+    margin-top: auto;
+}
+
+.site-footer p,
+footer.text-center p {
+    margin-bottom: 0.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   10. Responsive layout
+   -------------------------------------------------------------------------- */
+@media (max-width: 991.98px) {
+    .hero-section .container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .form-card .card-body {
+        padding: 1.5rem !important;
+    }
+
+    .section-card {
+        padding: 1.1rem;
+    }
+
+    .form-card-header {
+        padding: 1.25rem;
+    }
+
+    .header-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    body {
+        background-attachment: scroll;
+    }
+
+    .navbar-brand {
+        font-size: 0.92rem;
+    }
+
+    .form-card .card-body {
+        padding: 1.15rem !important;
+    }
+
+    .section-title {
+        font-size: 0.88rem;
+    }
+
+    .btn-predict {
+        width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .hero-card.p-5 {
+        padding: 2rem 1.25rem !important;
+    }
+
+    .display-6 {
+        font-size: 1.25rem;
+    }
+}
+
+/* Reduced motion — accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
